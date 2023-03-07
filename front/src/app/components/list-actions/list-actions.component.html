@@ -1,0 +1,31 @@
+<div class="table-wrapper">
+  <div class="table-title">
+    <h1>Historique d'activité</h1>
+
+  </div>
+</div>
+<br><br>
+<div *ngIf="dataSource.data.length<=0">
+  <div class="alert alert-danger text-center" role="alert">
+    Pas d'historique pour vous !
+  </div>
+</div>
+<table *ngIf="dataSource.data.length>0" [dataSource]="dataSource" class="mat-elevation-z8" mat-table>
+
+  <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+  <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+
+
+  <ng-container matColumnDef="id">
+    <th *matHeaderCellDef mat-header-cell>ID</th>
+    <td *matCellDef="let element" mat-cell>{{element.id}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="nom">
+    <th *matHeaderCellDef mat-header-cell>Action</th>
+    <td *matCellDef="let element" mat-cell> {{element.action}} </td>
+  </ng-container>
+
+</table>
+
+

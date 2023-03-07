@@ -1,0 +1,18 @@
+.img-responsive {
+  height: 90px;
+  width: 150px;
+}
+
+.nav-link {
+  font-size: 17px;
+  color: rgb(236, 236, 236);
+}
+
+.bg-dark {
+  /* background-color:rgba(9, 33, 170, 0.733) !important;*/
+  background-color: rgb(1, 45, 96) !important;
+}
+
+
+
+

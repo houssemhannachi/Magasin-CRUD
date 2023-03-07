@@ -1,0 +1,82 @@
+<div class="container-fluid pt-2" style="margin-bottom: 250px">
+
+  <div class="card border-secondary">
+    <div class="card-body">
+      <h4 class="card-title"><b>Ajouter une commande</b></h4>
+      <form [formGroup]="commandeForm">
+        <div class="row">
+
+          <div class="col-md-8">
+            <div class="form-group">
+              <label>Client</label>
+              <select class="form-control" formControlName="client">
+                <option *ngFor="let client of clients" [ngValue]="client">{{client.nomClient}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Date du commande</label>
+              <input class="form-control" formControlName="dateCommande" required type="date">
+            </div>
+          </div>
+        </div>
+
+        <div class="card border-secondary mt-2 mb-5">
+          <div class="card-body">
+            <h4 class="card-title d-flex justify-content-between">Items Details
+              <button (click)="addInput()" class="btn btn-success" type="button">[+]</button>
+            </h4>
+
+            <div formArrayName="orderLineList">
+              <div *ngFor="let obj of orderLineList.controls;let i=index">
+                <div [formGroupName]="i" class="row">
+
+                  <div class="col-md-2">
+                    <label>Nom produit</label>
+                    <select (change)="onSelectChange(i)" class="form-control" formControlName="product">
+                      <option *ngFor="let product of products" [ngValue]="product">{{product.titre}}</option>
+                    </select></div>
+                  <div class="col-md-2">
+                    <label>Prix Unitaire</label>
+                    <input [attr.disabled]="true" class="form-control" formControlName="productPrix" required
+                           type="text">
+                  </div>
+                  <div class="col-md-2">
+                    <label>Quantité</label>
+                    <input (input)="onSelectChange(i)" class="form-control" formControlName="quantity" required
+                           type="number">
+                  </div>
+                  <div class="col-md-2">
+                    <label>Prix</label>
+                    <input [attr.disabled]="true" class="form-control" formControlName="amount" required type="text">
+                  </div>
+                  <div class="col-md-1">
+                    <button (click)="removeInput(i)" class="btn btn-danger" style="margin-top:30px" type="button">-
+                    </button>
+                  </div>
+                </div>
+
+
+              </div>
+
+
+            </div>
+            <div class="col-lg-1">
+              <label>Prix Total</label>
+              <input class="form-control" formControlName="prixTotal" readonly type="text">
+
+            </div>
+          </div>
+
+        </div>
+
+
+        <button (click)="addCommande()" class="btn btn-primary btn-toolbar" name="" type="button">
+          Ajouter une commande
+        </button>
+      </form>
+
+    </div>
+  </div>
+</div>

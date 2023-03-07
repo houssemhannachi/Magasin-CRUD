@@ -1,0 +1,77 @@
+<div class="col-md-12">
+  <div class="card card-container">
+
+    <br>
+    <img
+      class="profile-img-card"
+      id="profile-img"
+      src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+    /><br>
+    <form
+      #f="ngForm"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      *ngIf="!isLoggedIn"
+      name="form"
+      novalidate
+    >
+      <div class="form-group">
+        <label><b>Adresse e-mail</b> *</label>
+        <input
+          #email="ngModel"
+          [(ngModel)]="form.username"
+          [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
+          class="form-control"
+          name="email"
+          placeholder="Entrer l'adresse e-mail"
+          required
+          type="text"
+        />
+        <div *ngIf="email.errors && f.submitted" class="invalid-feedback">
+          Adresse e-mail est nécessaire.
+        </div>
+      </div>
+      <div class="form-group">
+        <label><b>Mot de passe</b> *</label>
+        <input
+          #password="ngModel"
+          [(ngModel)]="form.password"
+          [ngClass]="{ 'is-invalid': f.submitted && password.errors }"
+          class="form-control"
+          minlength="6"
+          name="password"
+          placeholder="Entrer le mot de passe"
+          required
+          type="password"
+        />
+        <div *ngIf="password.errors && f.submitted" class="invalid-feedback">
+          <div *ngIf="password.errors['required']">Mot de passe est nécessaire.</div>
+          <div *ngIf="password.errors['minlength']">
+            Le mot de passe doit avoir une longueur minimum de 6 caractères.
+          </div>
+        </div>
+      </div>
+      <div class="form-group boutton">
+        <button class="btn btn-primary btn-block">
+          Connexion
+        </button>
+
+
+      </div>
+      <div class="form-group ">
+        <div *ngIf="f.submitted && isLoginFailed" class="alert alert-danger text-center" role="alert">
+          Erreur : {{ errorMessage }}
+        </div>
+      </div>
+
+    </form>
+    <div class="align-self-md-center ">
+            <span *ngIf="!isLoggedIn" class="msg">Vous n'avez pas de compte ?
+      <a [routerLink]="['/register']">INSCRIVEZ-VOUS ICI</a></span>
+    </div>
+    <div *ngIf="isLoggedIn" class="alert alert-success">
+      <span>La connexion est établie avec succès.</span>
+    </div>
+  </div>
+
+
+</div>

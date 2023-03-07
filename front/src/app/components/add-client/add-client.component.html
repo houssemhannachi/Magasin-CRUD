@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row">
+    <div class="card col-md-6 offset-md-3 offset-md-3">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h2>Ajouter un client</h2>
+          <span>Veuillez utiliser le formulaire ci-dessous pour ajouter un client.</span>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <form [formGroup]="clientForm">
+          <div class="row">
+            <div class="col-4 mb-3">
+              <label class="form-label">Nom et prénom</label>
+              <input class="form-control" formControlName="nomClient" type="text">
+            </div>
+
+          </div>
+
+
+          <button (click)="addClient()" [disabled]="!clientForm.valid" class="btn btn-primary" type="button">
+            Ajouter
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

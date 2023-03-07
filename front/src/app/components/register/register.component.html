@@ -1,0 +1,99 @@
+<div class="col-md-12">
+  <div class="card card-container">
+
+    <br>
+    <img
+      class="profile-img-card"
+      id="profile-img"
+      src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+    /> <br>
+    <form
+      #f="ngForm"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      *ngIf="!isSuccessful"
+      name="form"
+      novalidate
+    >
+      <div class="form-group">
+        <label><b>Nom et Prénom</b> *</label>
+        <input
+          #username="ngModel"
+          [(ngModel)]="form.username"
+          [ngClass]="{ 'is-invalid': f.submitted && username.errors }"
+          class="form-control"
+          maxlength="20"
+          minlength="3"
+          name="username"
+          placeholder="Entrer le nom et le prénom"
+          required
+          type="text"
+        />
+        <div *ngIf="username.errors && f.submitted" class="invalid-feedback">
+          <div *ngIf="username.errors['required']">Nom et prènom sont nécessaires.</div>
+          <div *ngIf="username.errors['minlength']">
+            Ce champ doit avoir une longueur minimum de 3 caractères.
+          </div>
+          <div *ngIf="username.errors['maxlength']">
+            Le nom et prènom doit contenir au maximum 20 lettres.
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label><b>Adresse e-mail</b> *</label>
+        <input
+          #email="ngModel"
+          [(ngModel)]="form.email"
+          [ngClass]="{ 'is-invalid': f.submitted && email.errors }"
+          class="form-control"
+          email
+          name="email"
+          placeholder="Entrer l'adresse e-mail"
+          required
+          type="email"
+        />
+        <div *ngIf="email.errors && f.submitted" class="invalid-feedback">
+          <div *ngIf="email.errors['required']">Adresse e-mail est nécessaire.</div>
+          <div *ngIf="email.errors['email']">
+            Ce doit être une adresse e-mail valide.
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label><b>Mot de passe</b> *</label>
+        <input
+          #password="ngModel"
+          [(ngModel)]="form.password"
+          [ngClass]="{ 'is-invalid': f.submitted && password.errors }"
+          class="form-control"
+          minlength="6"
+          name="password"
+          placeholder="Entrer le mot de passe"
+          required
+          type="password"
+        />
+        <div *ngIf="password.errors && f.submitted" class="invalid-feedback">
+          <div *ngIf="password.errors['required']">Le mot de passe est nécessaire.</div>
+          <div *ngIf="password.errors['minlength']">
+            Le mot de passe doit avoir une longueur minimum de 6 caractères.
+          </div>
+        </div>
+      </div>
+      <div class="form-group boutton">
+        <button class="btn btn-primary btn-block ">Inscription</button>
+      </div>
+
+      <div *ngIf="f.submitted && isSignUpFailed" class="alert alert-warning">
+        Inscription a échoué!<br/>{{ errorMessage }}
+      </div>
+
+    </form>
+    <div class="align-self-md-center">
+    <span class="msg">Vous avez déjà un compte ?
+      <a [routerLink]="['/login']">CONNECTEZ-VOUS ICI</a></span>
+    </div>
+    <div *ngIf="isSuccessful" class="alert alert-success">
+      Votre inscription a été réussi!
+    </div>
+  </div>
+</div>
+

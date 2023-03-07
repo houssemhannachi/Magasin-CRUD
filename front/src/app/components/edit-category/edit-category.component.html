@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+    <div class="card col-md-6 offset-md-3 offset-md-3">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h2>Modifier une catégorie</h2>
+          <span>Veuillez utiliser le formulaire ci-dessous pour modifier une catégorie.</span>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <form [formGroup]="categoryForm">
+          <div class="row">
+            <div class="col-4 mb-3">
+              <label class="form-label">Titre</label>
+              <input class="form-control" formControlName="titre" type="text">
+            </div>
+
+            <br>
+            <div class="form-group  ">
+
+              <button (click)="onSubmit()" [disabled]="!categoryForm.valid" class="btn btn-primary" type="button">
+                Modifier
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

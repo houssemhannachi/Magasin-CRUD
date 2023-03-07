@@ -1,0 +1,57 @@
+<div class="table-wrapper">
+  <div class="table-title">
+    <div class="row">
+      <div class="col-xs-6">
+        <h2>Liste des catégories</h2>
+      </div>
+    </div>
+
+    <button class="btn btn-outline-success" routerLink="/addCategory"
+            style="float: right;
+                  border-radius: 5px;"><i class="bi bi-plus-circle-fill"></i>&nbsp;Ajouter une catégorie
+    </button>
+  </div>
+</div>
+<br><br>
+<div *ngIf="dataSource.data.length<=0">
+  <div class="alert alert-danger text-center" role="alert">
+    Pas de catégorie disponible !
+  </div>
+</div>
+
+<table *ngIf="dataSource.data.length>0" [dataSource]="dataSource" class="mat-elevation-z8" mat-table>
+
+  <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+  <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+
+
+  <ng-container matColumnDef="id">
+    <th *matHeaderCellDef mat-header-cell>ID</th>
+    <td *matCellDef="let element" mat-cell>{{element.idCategory}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="titre">
+    <th *matHeaderCellDef mat-header-cell>TITRE</th>
+    <td *matCellDef="let element" mat-cell> {{element.titre}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="cc">
+
+    <th *matHeaderCellDef mat-header-cell>Actions</th>
+    <td *matCellDef="let element" mat-cell>
+      <button color="primary" mat-button
+              routerLink="/categories/edit/{{element.idCategory}}">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button (click)="onDelete(element)" color="primary" mat-button>
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+
+  </ng-container>
+
+
+</table>
+
+

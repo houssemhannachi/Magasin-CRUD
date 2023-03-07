@@ -1,0 +1,51 @@
+<div class="table-wrapper">
+  <div class="table-title">
+    <h1>Liste des clients</h1>
+    <button class="btn btn-outline-success" routerLink="/addClient"
+            style="float: right;
+                  border-radius: 5px;"><i class="bi bi-plus-circle-fill"></i>&nbsp;Ajouter un client
+    </button>
+  </div>
+</div>
+<br><br>
+<div *ngIf="dataSource.data.length<=0">
+  <div class="alert alert-danger text-center" role="alert">
+    Pas de client disponible !
+  </div>
+</div>
+<table *ngIf="dataSource.data.length>0" [dataSource]="dataSource" class="mat-elevation-z8" mat-table>
+
+  <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+  <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+
+
+  <ng-container matColumnDef="id">
+    <th *matHeaderCellDef mat-header-cell>ID</th>
+    <td *matCellDef="let element" mat-cell>{{element.clientId}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="nom">
+    <th *matHeaderCellDef mat-header-cell>Nom et Prénom</th>
+    <td *matCellDef="let element" mat-cell> {{element.nomClient}} </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="cc">
+
+    <th *matHeaderCellDef mat-header-cell>Actions</th>
+    <td *matCellDef="let element" mat-cell>
+      <button color="primary" mat-button
+              routerLink="/clients/edit/{{element.clientId}}">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button (click)="onDelete(element)" color="primary" mat-button>
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+
+  </ng-container>
+
+
+</table>
+
+

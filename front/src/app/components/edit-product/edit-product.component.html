@@ -1,0 +1,59 @@
+<div class="container">
+  <div class="row">
+    <div *ngIf="!errorMessage" class="card col-md-6 offset-md-3 offset-md-3">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h2>Modifier un produit</h2>
+          <span>Veuillez utiliser le formulaire ci-dessous pour modifier un produit.</span>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <form [formGroup]="productForm">
+          <div class="row">
+            <div class="col-4 mb-3">
+              <label class="form-label">Titre</label>
+              <input class="form-control" formControlName="titre" type="text">
+            </div>
+            <div class="col-4 mb-3">
+              <label class="form-label">Catégorie</label>
+              <select [compareWith]="compareCategoryById" class="form-control" formControlName="category">
+                <option *ngFor="let category of categories " [ngValue]="category">{{category.titre}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-4 mb-3">
+              <label class="form-label">Quantité en stock</label>
+              <input class="form-control" formControlName="qteStock" type="number">
+            </div>
+            <div class="col-4 mb-3">
+              <label class="form-label">Prix Unitaire</label>
+              <input class="form-control" formControlName="prix" type="number">
+
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" formControlName="description" type="text"></textarea>
+
+          </div>
+
+          <br>
+          <div class="form-group  ">
+
+            <button (click)="onSubmit()" [disabled]="!productForm.valid" class="btn btn-primary" type="button">
+              Ajouter
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+  <div *ngIf="errorMessage">
+    <div class="alert alert-danger text-center" role="alert">
+      {{errorMessage}}
+    </div>
+  </div>
+</div>
