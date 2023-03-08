@@ -1,5 +1,6 @@
-package fr.sparkit.spring.security.jwt.advice;
+package fr.sparkit.spring.security.jwt.exception;
 
+import fr.sparkit.spring.security.jwt.advice.*;
 import org.springframework.dao.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;

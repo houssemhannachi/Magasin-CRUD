@@ -17,9 +17,9 @@ import {ActivatedRoute} from "@angular/router";
 export class ListProductComponent implements OnInit {
 
   products!: Product[];
-
+  inStock!: boolean;
   dataSource!: MatTableDataSource<Product>;
-  displayedColumns: string[] = ['image', 'titre', 'pu', 'categorie', 'stock', 'cc'];
+  displayedColumns: string[] = ['stock', 'image', 'titre', 'pu', 'categorie', 'cc'];
   categories?: Category[];
 
 
@@ -31,19 +31,26 @@ export class ListProductComponent implements OnInit {
   getAllProducts() {
     this.products = this.route.snapshot.data.product;
     this.dataSource.data = this.products;
-    this.products.forEach((p) => {
+    this.getImages();
+    this.getStock();
+
+
+  }
+
+  getStock() {
+    this.dataSource.data.map(p => {
+      this.inStock = isProductInStock(p.qteStock);
+      p.state = isProductInStock(p.qteStock) ? "check_circle" : "remove_circle"
+    });
+  }
+
+  getImages() {
+    this.dataSource.data.forEach((p) => {
       this.uploadService.getImage(p.photo.id).subscribe(file => {
           p.photo = file;
         }
       )
     })
-
-    this.dataSource.data.map(p => {
-      p.state = isProductInStock(p.qteStock) ? "En stock" : "Hors stock"
-    });
-    console.log(this.dataSource.data)
-
-
   }
 
   getAllProductsBack() {
@@ -108,12 +115,8 @@ export class ListProductComponent implements OnInit {
   filter(value: any) {
     this.productService.getProductsByCategory(value.idCategory).subscribe((data) => {
         this.dataSource.data = data;
-        this.dataSource.data.forEach((p) => {
-          this.uploadService.getImage(p.photo.id).subscribe(file => {
-              p.photo = file;
-            }
-          )
-        })
+        this.getImages();
+        this.getStock();
       }
     )
 

@@ -47,4 +47,11 @@ public class ProductServiceImpl implements IProductService {
         return productRepository.saveAndFlush(product);
 
     }
+
+    @Override
+    public Boolean inStock(Product product) {
+        return product.getQteStock()>0;
+    }
+
+
 }

@@ -26,6 +26,7 @@ export class AddCommandeComponent implements OnInit {
   itemsArray: Array<CommandeLine> = [];
   product: any;
   clients: any;
+  errorMessage!: string;
 
   constructor(private clientService: ClientService, private fb: FormBuilder, private productService: ProductService, private commandeService: CommandeService, private router: Router) {
     this.commandeForm = this.fb.group({
@@ -46,7 +47,7 @@ export class AddCommandeComponent implements OnInit {
     const orderLineList = this.fb.group({
       product: new FormControl(),
       productPrix: new FormControl(0),
-      quantity: new FormControl(0),
+      quantity: new FormControl(1,Validators.min(0.01)),
       amount: new FormControl(0)
     })
 
@@ -98,6 +99,9 @@ export class AddCommandeComponent implements OnInit {
   addCommande() {
     this.commandeService.createCommande(this.commandeForm.value).subscribe(res => {
       this.router.navigate(['/commandes'])
+    }, error => {
+      this.errorMessage = error.error;
+      console.log(this.errorMessage)
     })
   }
 

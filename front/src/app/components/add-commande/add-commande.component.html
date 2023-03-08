@@ -32,28 +32,32 @@
               <div *ngFor="let obj of orderLineList.controls;let i=index">
                 <div [formGroupName]="i" class="row">
 
-                  <div class="col-md-2">
+                  <div class="col-md-1">
                     <label>Nom produit</label>
                     <select (change)="onSelectChange(i)" class="form-control" formControlName="product">
                       <option *ngFor="let product of products" [ngValue]="product">{{product.titre}}</option>
                     </select></div>
-                  <div class="col-md-2">
+                  <div class="col-md-1">
                     <label>Prix Unitaire</label>
                     <input [attr.disabled]="true" class="form-control" formControlName="productPrix" required
                            type="text">
                   </div>
-                  <div class="col-md-2">
+                  <div class="col-md-1">
                     <label>Quantité</label>
                     <input (input)="onSelectChange(i)" class="form-control" formControlName="quantity" required
                            type="number">
                   </div>
-                  <div class="col-md-2">
+                  <div class="col-md-1">
                     <label>Prix</label>
                     <input [attr.disabled]="true" class="form-control" formControlName="amount" required type="text">
                   </div>
                   <div class="col-md-1">
                     <button (click)="removeInput(i)" class="btn btn-danger" style="margin-top:30px" type="button">-
                     </button>
+                  </div>
+                  <div *ngIf="errorMessage" class="col-md-3 alert alert-danger text-center"
+                       style="height:10px;margin-top:30px;padding-top:-20px">
+                    <label style="margin-top:-11px;"><b>{{errorMessage}}</b></label>
                   </div>
                 </div>
 
@@ -72,7 +76,8 @@
         </div>
 
 
-        <button (click)="addCommande()" class="btn btn-primary btn-toolbar" name="" type="button">
+        <button (click)="addCommande()" [disabled]="!commandeForm.valid" class="btn btn-primary btn-toolbar" name=""
+                type="button">
           Ajouter une commande
         </button>
       </form>

@@ -17,29 +17,38 @@ public class OrderServiceImpl implements IOrderService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private IOrderLineService orderLineService;
+    @Autowired
+    private IProductService productService;
+
     @Override
 
     public void addOrder(Commande commande) {
-        commande.setPrixTotal(calculateTotalAmount(commande));
-        orderRepository.save(commande);
-        commande.getOrderLineList().forEach(orderLine -> {
-                    orderLine.setCommande(commande);
-                    changeProductQuantity(orderLine);
-                    orderLineRepository.save(orderLine);
-                }
-        );
+        for (OrderLine orderLine : commande.getOrderLineList()) {
+            if (!productService.inStock(orderLine.getProduct())) {
+                throw new NoSuchElementException("Ce produit est hors stock.");
+            }
+            if (!orderLineService.checkQuantity(orderLine)) {
+                throw new NoSuchElementException("Quantité du produit en stock < Quantité du produit demandé");
+            }
+
+        }
+        try {
+            commande.setPrixTotal(calculateTotalAmount(commande));
+            orderRepository.save(commande);
+            commande.getOrderLineList().forEach(orderLine -> {
+                        orderLine.setCommande(commande);
+                        orderLineService.changeProductQuantity(orderLine);
+                        orderLineRepository.save(orderLine);
+                    }
+            );
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
     }
 
-    private void changeProductQuantity(OrderLine orderLine) {
-
-        Product product = orderLine.getProduct();
-        long quantityRes = product.getQteStock() - orderLine.getQuantity();
-
-        product.setQteStock(quantityRes);
-        productRepository.save(product);
-
-    }
 
     public double calculateTotalAmount(Commande commande) {
         double totalAmount = 0;

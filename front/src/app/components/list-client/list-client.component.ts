@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable} from "rxjs";
-import {Product} from "../../_models/Product";
 import {MatTableDataSource} from "@angular/material/table";
 import Swal from "sweetalert2";
 import {ClientService} from "../../_services/client.service";
 import {Client} from "../../_models/Client";
+import {ActivatedRoute} from "@angular/router";
+
 @Component({
   selector: 'app-list-client',
   templateUrl: './list-client.component.html',
@@ -12,17 +12,21 @@ import {Client} from "../../_models/Client";
 })
 export class ListClientComponent implements OnInit {
 
-  products!: Product[];
-  dataSource!: MatTableDataSource<Product>;
+  dataSource!: MatTableDataSource<Client>;
   displayedColumns: string[] = ['id', 'nom', 'cc'];
+  clients!: Client[];
 
-
-  constructor(private clientService:ClientService) {
+  constructor(private route: ActivatedRoute, private clientService: ClientService) {
     this.dataSource = new MatTableDataSource()
   }
 
 
   getAllClients() {
+    this.clients = this.route.snapshot.data.client;
+    this.dataSource.data = this.clients;
+  }
+
+  getAllClientsBack() {
     this.clientService.getAllClients().subscribe(data => {
       this.dataSource.data = data;
     })
@@ -51,7 +55,7 @@ export class ListClientComponent implements OnInit {
       if (result.value) {
         this.clientService.deleteClientById(client.clientId).subscribe(
           result => {
-            this.getAllClients();
+            this.getAllClientsBack();
 
             Swal.fire({
               title: 'Supprimé!',

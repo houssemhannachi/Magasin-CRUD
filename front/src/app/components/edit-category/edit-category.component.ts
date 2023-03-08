@@ -10,7 +10,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class EditCategoryComponent implements OnInit {
   id!: number;
-
+  errorMessage!: string;
   categoryForm = new FormGroup({
     titre: new FormControl(null, [Validators.required]),
   });
@@ -22,9 +22,13 @@ export class EditCategoryComponent implements OnInit {
     this.id = this.activatedRoute.snapshot.params['id'];
     this.categoryService.getCategoryById(this.id).subscribe(data => {
       this.categoryForm.patchValue({titre: data.titre})
-
+    }, error => {
+      this.errorMessage = error.error;
+      console.log(error.error)
     })
+
   }
+
 
   onSubmit() {
     this.categoryService.updateCategory({idCategory: this.id, ...this.categoryForm.value}).subscribe(() => {

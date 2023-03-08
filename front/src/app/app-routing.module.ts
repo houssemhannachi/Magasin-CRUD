@@ -24,6 +24,7 @@ import {ListActionsComponent} from "./components/list-actions/list-actions.compo
 import {CategoryListResolver} from "./_helpers/CategoryListResolver";
 import {HistoryResolver} from "./_helpers/HistoryResolver";
 import {CommandeListResolver} from "./_helpers/CommandeListResolver";
+import {ClientListResolver} from "./_helpers/ClientListResolver";
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -34,7 +35,7 @@ const routes: Routes = [
   {path: 'mod', component: BoardModeratorComponent},
   {path: 'admin', component: BoardAdminComponent},
   {path: 'category', component: ListCategoryComponent, resolve: {category: CategoryListResolver}},
-  {path: 'clients', component: ListClientComponent},
+  {path: 'clients', component: ListClientComponent, resolve: {client: ClientListResolver}},
   {path: 'commandes', component: ListCommandeComponent, resolve: {commande: CommandeListResolver}},
   {path: 'actions', component: ListActionsComponent, resolve: {action: HistoryResolver}},
   {path: 'products', component: ListProductComponent, resolve: {product: ItemListResolver}},

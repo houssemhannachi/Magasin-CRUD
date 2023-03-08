@@ -16,4 +16,6 @@ public interface IProductService {
     void deleteProduct(Long id);
 
     Product editProduct(Product product);
+
+    Boolean inStock(Product product);
 }

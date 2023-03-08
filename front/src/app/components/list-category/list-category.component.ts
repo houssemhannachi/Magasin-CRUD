@@ -39,7 +39,7 @@ export class ListCategoryComponent implements OnInit {
       if (result.value) {
         this.categoryService.deleteCategoryById(category.idCategory).subscribe(
           result => {
-            this.getAllCategories();
+            this.getAllCategoriesBack();
 
             Swal.fire({
               title: 'Supprimé!',
@@ -74,6 +74,13 @@ export class ListCategoryComponent implements OnInit {
   getAllCategories() {
     this.categories = this.route.snapshot.data.category;
     this.dataSource.data = this.categories;
+  }
+
+
+  getAllCategoriesBack() {
+    this.categoryService.getAllCategories().subscribe(data=>{
+      this.dataSource.data=data;
+    })
   }
 
 }

@@ -1,4 +1,4 @@
-<div class="table-wrapper">
+<div class="table-wrapper" xmlns="http://www.w3.org/1999/html">
   <div class="table-title">
     <div class="row">
       <div class="col-xs-6">
@@ -11,25 +11,30 @@
                   border-radius: 5px;"><i class="bi bi-plus-circle-fill"></i>&nbsp;Ajouter un produit
     </button>
     <br><br>
-    <div *ngIf="dataSource.data.length<=0">
-      <div class="alert alert-danger text-center" role="alert">
-        Pas de produit disponible !
-      </div>
-    </div>
+
   </div>
 </div>
-<mat-form-field *ngIf="dataSource.data.length>0">
-  <mat-select (selectionChange)="filter($event.value)">
+<mat-form-field>
+  <mat-select (selectionChange)="filter($event.value)" [placeholder]="'Filter...'">
     <mat-option *ngFor="let category of categories" [value]="category">{{category.titre}}</mat-option>
-
   </mat-select>
 </mat-form-field>
-
+<div *ngIf="dataSource.data.length<=0">
+  <div class="alert alert-danger text-center" role="alert">
+    Pas de produit disponible !
+  </div>
+</div>
 <table *ngIf="dataSource.data.length>0" [dataSource]="dataSource" class="mat-elevation-z8" mat-table>
 
   <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
   <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-
+  <ng-container matColumnDef="stock">
+    <th *matHeaderCellDef mat-header-cell>Stock</th>
+    <td *matCellDef="let element"
+        mat-cell>
+      <mat-icon [ngClass]=" inStock?'green-icon': 'red-icon'"> {{element.state}}</mat-icon>
+    </td>
+  </ng-container>
 
   <ng-container matColumnDef="image">
     <th *matHeaderCellDef mat-header-cell>Image</th>
@@ -51,10 +56,7 @@
     <th *matHeaderCellDef mat-header-cell>Catégorie</th>
     <td *matCellDef="let element" mat-cell> {{element.category.titre}} </td>
   </ng-container>
-  <ng-container matColumnDef="stock">
-    <th *matHeaderCellDef mat-header-cell>Stock</th>
-    <td *matCellDef="let element" mat-cell> {{element.state}} </td>
-  </ng-container>
+
 
   <ng-container matColumnDef="cc">
 
